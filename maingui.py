@@ -8,7 +8,7 @@ app = QApplication([])
 
 
 
-mood_list = ['sad', 'happy', 'mad']
+mood_list = ['sad', 'neutral','happy', 'mad', 'anxious']
 day_list = ['good', 'boring', 'stressful']
 
 class MyWindow(QWidget):
