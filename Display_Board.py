@@ -6,7 +6,7 @@ from __feature__ import snake_case, true_property
 from get_images import search_images
 from io import BytesIO
 
-image_search_term = 'Nature'
+image_search_term = 'Happy'
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -31,8 +31,12 @@ class MainWindow(QWidget):
         self.layout = QVBoxLayout()
         self.layout.add_widget(img_label)
         self.set_layout(self.layout)
-   
-app = QApplication(sys.argv)
-main = MainWindow()
-main.show()
-sys.exit(app.exec())
+
+def main():
+    app = QApplication(sys.argv)
+    main = MainWindow()
+    main.show()
+    sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()
