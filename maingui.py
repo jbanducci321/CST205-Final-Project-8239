@@ -6,7 +6,11 @@ from PySide6.QtCore import Slot
 from __feature__ import snake_case, true_property
 app = QApplication([])
 
-
+# Potential Questions
+# Do you feel better?
+# Do you feel like you have been productive?
+# Potentially add these to a dictionary in a different file and import random
+# random would ask a random number of questions
 
 mood_list = ['sad', 'happy', 'mad']
 day_list = ['good', 'boring', 'stressful']
