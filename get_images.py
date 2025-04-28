@@ -15,8 +15,8 @@ def search_images(search_term):
         "Authorization": my_key
     }
 
-    random_page = random.randint(1,75) #Randomly determines the page number for search
-    image_count = 15 #Determines how many images to retrieve
+    random_page = random.randint(1,80) #Randomly determines the page number for search
+    image_count = 25 #Determines how many images to retrieve
     
     params = {
         "query": search_term,
@@ -33,13 +33,13 @@ def search_images(search_term):
         random.shuffle(photos) #Shuffles the list of pictures
 
         #Specifies the number of photos to get
-        num_images = 4
+        num_images = 6
         
         #Collects unique image urls to prevent duplicates
         unique_urls = []
         seen = set()
         for photo in photos:
-            url = photo['src']['large'] #Other image sizes: source(largest), large, medium, small
+            url = photo['src']['medium'] #Other image sizes: source(largest), large, medium, small
             if url not in seen: #Checks if the url isn't in the set
                 seen.add(url) #Adds url to the set
                 unique_urls.append(url) #Adds the url to the unique url list
@@ -52,8 +52,8 @@ def search_images(search_term):
         if __name__ == "__main__":
             for i, img in enumerate(images):
                 print(f"Image {i+1}: size = {img.width}x{img.height}")
-                img.show()
-                time.sleep(1)
+                #img.show()
+                #time.sleep(1)
 
         #Collects the image info into a dictionary
         image_info_list = [
@@ -75,7 +75,7 @@ def search_images(search_term):
 
 
 def main():
-    search_images('happy')
+    search_images('anxious')
 
 if __name__ == "__main__":
     main()
