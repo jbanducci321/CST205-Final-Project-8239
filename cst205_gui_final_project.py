@@ -1,5 +1,5 @@
 '''
-Title: cst205_gui_final_project.py
+Title: first_page.py
 Author: Mohammad Shahroudi
 Abstract: This file will have gui.
 Date: April 21, 2025
