@@ -1,21 +1,31 @@
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLineEdit, 
                                 QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, QComboBox)
-from PySide6.QtGui import QPixmap
-from PySide6.QtCore import Slot
+from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtCore import Slot, Qt
 from __feature__ import snake_case, true_property
+from io import BytesIO
+from get_images import search_images
+
 app = QApplication([])
 
 
-
-mood_list = ['sad', 'neutral','happy', 'mad', 'anxious']
-day_list = ['good', 'boring', 'stressful']
+mood_list = ['Choose a mood','sad', 'neutral','happy', 'mad', 'anxious']
+day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
 
 class MyWindow(QWidget):
   def __init__(self):
     super().__init__()
 
+    self.style_sheet = "background-color: white; color: black;font-size: 16px;font-family: Arial;"
+
     self.window_title = 'Mood Board Generator'
+    self.page_title = QLabel("Welcome to Your Mood Board!")
+    self.page_title.style_sheet = "font-size: 24px; font-weight: bold; margin-bottom: 20px;"
+
+    self.image_label = QLabel()
+    self.image_pixmap = QPixmap("penguin.png")
+    self.image_label.pixmap = self.image_pixmap
 
     self.label = QLabel("How are you feeling today?")
     self.combo_box = QComboBox()
@@ -25,13 +35,31 @@ class MyWindow(QWidget):
     self.day_box = QComboBox()
     self.day_box.add_items(day_list)
 
+    self.label3 = QLabel("When is the last time you did something fun?")
+    self.fun_time_box = QComboBox()
+    self.fun_time_box.add_items([
+        'Choose an answer', 
+        'Today', 
+        'Yesterday', 
+        'This week', 
+        'A while ago', 
+        'I can\'t remember'
+    ])
+
     self.proceed_button = QPushButton("Show Mood Board")
 
     layout = QVBoxLayout()
+    layout.add_widget(self.page_title)
+    layout.add_widget(self.image_label)
     layout.add_widget(self.label)
     layout.add_widget(self.combo_box)
+    layout.add_spacing(20)
     layout.add_widget(self.label2)
     layout.add_widget(self.day_box)
+    layout.add_spacing(20)
+    layout.add_widget(self.label3)
+    layout.add_widget(self.fun_time_box)
+    layout.add_spacing(20)
     layout.add_widget(self.proceed_button)
     self.set_layout(layout)
 
@@ -47,9 +75,26 @@ class MyWindow(QWidget):
 class NewWindow(QWidget):
   def __init__(self, mood):
       super().__init__()
+      self.window_title = f"Mood Board: {mood.capitalize()}"
+
       mood_label = QLabel(f"You selected: {mood}")
+      img_label = QLabel()
+
+      pil_img = search_images(mood)
+
+      if pil_img:
+          buffer = BytesIO()
+          pil_img.save(buffer, format='PNG')
+          qimage = QImage.from_data(buffer.getvalue())
+          pixmap = QPixmap.from_image(qimage)
+          pixmap = pixmap.scaled(500, 500, Qt.KeepAspectRatio)
+          img_label.pixmap = pixmap
+      else:
+          img_label.set_text("No image found for this mood.")
+
       layout = QVBoxLayout()
       layout.add_widget(mood_label)
+      layout.add_widget(img_label)
       self.set_layout(layout)
 
 
