@@ -13,14 +13,11 @@ class MainWindow(QMainWindow):
         results = search_youtube_videos("happy video")
 
         # Embed YouTube video using iframe HTML
-        html = '''
+        html = f'''
         <html>
-          <head>
-            <style>body { margin: 0; }</style>
-          </head>
           <body>
             <iframe width="50%" height="50%" 
-              src=f"https://www.youtube.com/embed/{results[1]}" 
+              src="https://www.youtube.com/embed/{results[1]}" 
               frameborder="0" 
               allowfullscreen>
             </iframe>
