@@ -23,7 +23,7 @@ class MainWindow(QWidget):
             qimage = QImage.from_data(buffer.getvalue())
             pixmap = QPixmap.from_image(qimage)
             
-            pixmap = pixmap.scaled(950, 600)
+            pixmap = pixmap.scaled(1000, 600)
             
             img_label.pixmap = pixmap
         
