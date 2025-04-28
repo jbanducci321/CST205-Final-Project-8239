@@ -18,8 +18,8 @@ def search_youtube_videos(query):
         video_id = item["id"]["videoId"]
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         video_urls.append(video_url)
-    video = random.choice(video_urls)
-    return video
+    video_info = [random.choice(video_urls, video_id)]
+    return video_info
 
 # Example
 results = search_youtube_videos("happy video")
