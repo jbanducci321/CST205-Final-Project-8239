@@ -1,5 +1,6 @@
 #API KEY AIzaSyBgxL4_sHM9p4Wl6WL21xB1I1LTNykrOF8
 from googleapiclient.discovery import build
+import random
 
 def search_youtube_videos(query):
     api_key = "AIzaSyBgxL4_sHM9p4Wl6WL21xB1I1LTNykrOF8"
@@ -17,10 +18,9 @@ def search_youtube_videos(query):
         video_id = item["id"]["videoId"]
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         video_urls.append(video_url)
-
-    return video_urls
+    video = random.choice(video_urls)
+    return video
 
 # Example
 results = search_youtube_videos("happy video")
-for url in results:
-    print(url)
+print(results)
