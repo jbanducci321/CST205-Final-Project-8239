@@ -10,6 +10,7 @@ def search_youtube_videos(query):
         q=query,
         part="snippet",
         type="video",
+        videoLicense='creativeCommon',
         maxResults=10
     ).execute()
 
