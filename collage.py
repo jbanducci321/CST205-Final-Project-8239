@@ -1,15 +1,5 @@
 from PIL import Image
 
-'''To Do:
-1. Fix the way that images are placed onto the background
-2. Edit the background dimensions (need to make it smaller)
-3. Add error handling for if the images exceed background dimensions
-
-Solution:
-Split the diplay images into rows by dividing by 2, layout each row then increment 
-the necessary values to get a good layut. Take largest widths and heights and add them together instead of 
-just collecitng all the widths and heights together'''
-
 #Takes the emotion and list of image objects
 def create_collage(emotion, image_info_list):
     
@@ -35,7 +25,7 @@ def create_collage(emotion, image_info_list):
 
         if (1 + i) == (len(image_info_list)//2): #Once half the images are placed, moves to next rows
             offset_x = buffer
-            offset_y = row_height + buffer + 25
+            offset_y += row_height + buffer
         
 
     
@@ -79,7 +69,7 @@ def get_background_color(emotion):
     elif emotion.lower() == 'neutral':
         background_color = (200, 200, 200) #Scandinavian prison wall
     elif emotion.lower() == 'anxious':
-        background_color = (175, 238, 238) #Pale blue-green
+        background_color = 	(255, 228, 225) #Misty rosecolage.py: 
     else:
         background_color = (255, 255, 255) #White
     
@@ -89,14 +79,7 @@ def get_background_color(emotion):
 def copy_image(img, target_img, offset_x, offset_y):
     copy_img = img['image']
 
-    target_x = offset_x
-    for source_x in range(img['width']):
-        target_y = offset_y
-        for source_y in range(img['height']):
-            p = copy_img.getpixel((source_x, source_y))
-            target_img.putpixel((target_x, target_y), p)
-            target_y += 1
-        target_x += 1
+    target_img.paste(copy_img, (offset_x, offset_y))
 
 
 def main():
