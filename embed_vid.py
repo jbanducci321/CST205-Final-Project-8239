@@ -2,6 +2,19 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtWebEngineWidgets import QWebEngineView
 import sys
 from get_vid import search_youtube_videos
+# import os
+
+# os.environ["QTWEBENGINE_DISABLE_SANDBOX"] = "1"
+# os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = (
+#     "--no-sandbox "
+#     "--disable-gpu "
+#     "--disable-software-rasterizer "
+#     "--disable-accelerated-video-decode "
+#     "--disable-accelerated-2d-canvas "
+#     "--disable-webgl"
+# )
+# os.environ["QT_QUICK_BACKEND"] = "software"
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -17,7 +30,7 @@ class MainWindow(QMainWindow):
         <html>
           <body>
             <iframe width="50%" height="50%" 
-              src="https://www.youtube.com/embed/{results[1]}" 
+              src="https://www.youtube.com/embed/{results[0]}" 
               frameborder="0" 
               allowfullscreen>
             </iframe>
