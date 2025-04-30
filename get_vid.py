@@ -29,7 +29,3 @@ def search_youtube_videos(query):
     video_info.append(video_url)
     return video_info
 
-# Example
-results = search_youtube_videos("happy video")
-print(results[0]) # video_id
-print(results[1]) # video_url

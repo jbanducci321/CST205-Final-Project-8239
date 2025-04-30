@@ -23,9 +23,7 @@ def download_video(url):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
-# Example usage
-video_url = 'https://www.youtube.com/watch?v=J---aiyznGQ'
-#download_video(video_url)
+
 
 def download_audio(url):
     downloads_path = os.path.join(os.path.expanduser('~'), 'Downloads')
@@ -47,5 +45,3 @@ def download_audio(url):
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-
-download_audio(video_url)
