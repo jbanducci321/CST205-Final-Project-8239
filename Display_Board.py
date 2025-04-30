@@ -13,12 +13,12 @@ import os
 image_search_term = 'anxious'
 
 class MainWindow(QWidget):
-    def __init__(self):
+    def __init__(self, emotion):
         super().__init__()
         img_label = QLabel() #Creates a label object to hold an image
         
         #Calls the image search function
-        pil_img = search_images(image_search_term)
+        pil_img = search_images(image_search_term) #Change this to emotion
         self.pil_img = pil_img
         
         if pil_img:
