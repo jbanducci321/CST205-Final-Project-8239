@@ -67,7 +67,7 @@ def get_background_color(emotion):
     elif emotion.lower() == 'angry':
         background_color = (220, 20, 60) #Crimson red
     elif emotion.lower() == 'neutral':
-        background_color = (200, 200, 200) #Scandinavian prison wall
+        background_color = (200, 200, 200) #Neutral gray
     elif emotion.lower() == 'anxious':
         background_color = 	(255, 228, 225) #Misty rosecolage.py: 
     else:

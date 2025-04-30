@@ -42,7 +42,7 @@ def search_images(search_term):
             
             #Collects unique image urls to prevent duplicates
             unique_urls = []
-            seen = set()
+            seen = set() #Creates a set to store urls for sorting
             for photo in photos:
                 url = photo['src']['medium'] #Other image sizes: source(largest), large, medium, small
                 if url not in seen: #Checks if the url isn't in the set
@@ -51,14 +51,10 @@ def search_images(search_term):
                 if len(unique_urls) == num_images:
                     break #Ends the loop once the specified number of image urls are collected
             
-            #Converts the image urls to image objects
+            
+            #Converts the image urls to pil image objects
             images = [Image.open(BytesIO(requests.get(url).content)) for url in unique_urls]
             
-            if __name__ == "__main__":
-                for i, img in enumerate(images):
-                    print(f"Image {i+1}: size = {img.width}x{img.height}")
-                    #img.show()
-                    #time.sleep(1)
 
             #Collects the image info into a dictionary
             image_info_list = [
