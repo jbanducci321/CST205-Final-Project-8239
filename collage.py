@@ -3,7 +3,7 @@ from PIL import Image
 #Takes the emotion and list of image objects
 def create_collage(emotion, image_info_list):
     
-    buffer = 75
+    buffer = 50
 
     #Calculates the dimensions for the background
     background_dimensions, row_height = get_background_dimensions(image_info_list, buffer)
@@ -16,7 +16,7 @@ def create_collage(emotion, image_info_list):
     collage_background = Image.new('RGB', background_dimensions, background_color)
 
     offset_x = buffer
-    offset_y = buffer
+    offset_y = buffer - buffer//2
 
     #Loops through the images and places them on the background
     for i, img in enumerate(image_info_list):

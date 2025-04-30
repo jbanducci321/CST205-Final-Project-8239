@@ -56,54 +56,88 @@ class MainWindow(QWidget):
     
     @Slot()
     def save_image(self): 
-        dialog = save_dialog(self.pil_img)
+        dialog = SaveDialog(self.pil_img)
         dialog.exec()
 
     #Add code for method for downloading the video
 
-class save_dialog(QDialog):
+#Dialog class for displaying the window for saving the image
+class SaveDialog(QDialog):
     def __init__(self, image):
         super().__init__()
-        self.window_title = "Save Mood Board"
+        self.window_title = "Save Mood Board" #Sets the window title
         self.image = image
         
-        layout = QVBoxLayout()
+        layout = QVBoxLayout() #Creates a v box for main layout
         
-        self.name_input = QLineEdit("Enter file name (e.g., my_mood_board.png)")
-
+        #Creates the text entry lines for file name/path
+        self.name_input = QLineEdit()
+        self.path_input = QLineEdit()
         
-        self.path_input = QLineEdit("Enter save folder path (leave blank for default)")
-        
+        #Creates a save button and connects it to the save image method
         self.save_button = QPushButton("Save")
         self.save_button.clicked.connect(self.save_image)
         
+        #Adds all the widgets to the v box layout
         layout.add_widget(QLabel("File Name:"))
         layout.add_widget(self.name_input)
+        layout.add_widget(QLabel("Leave file name blank for defualt (add .png)"))
+        layout.add_widget(QLabel())
         layout.add_widget(QLabel("Save Location:"))
         layout.add_widget(self.path_input)
-        layout.add_widget(self.save_button)
+        layout.add_widget(QLabel("Leave file path blank for default"))
+        layout.add_widget(self.save_button, alignment=Qt.AlignCenter)
+        self.resize(200, 200)
         
         self.set_layout(layout)
 
+    #Method for saving the image
+    @Slot()
     def save_image(self):
+        #Gets the file name/path from the line edits
         filename = self.name_input.text.strip()
         folder = self.path_input.text.strip()
         
+        #If line edits are left blank then it sets them to default
         if not filename:
             filename = "mood_board.png"
         
         if not folder:
             folder = os.getcwd() #Selects the current working directory
         
-        save_path = os.path.join(folder, filename)
+        save_path = os.path.join(folder, filename) #Creates the save path
         
+        #Checks whether the image saved or not and displays status to the user
         try:
-            self.image.save(save_path)
-            print("Image saved successfully")
+            self.image.save(save_path) #Saves the image
+            status_dialog = StatusDialog("Image saved sucessfully")
+            status_dialog.exec()
         except Exception as e:
-            print(f'Error saving image: {e}')
-        
+            status_dialog = StatusDialog(f'Error saving image: {e}')
+            status_dialog.exec()
         self.accept()
+
+class StatusDialog(QDialog):
+    def __init__(self, status_text):
+        super().__init__()
+         
+        self.window_title = "Save Status"
+        
+        layout = QVBoxLayout()
+        
+        #Creates the status message with the passed text
+        status_lbl = QLabel(status_text) 
+        status_lbl.alignment = Qt.AlignCenter
+        
+        #Creates and connects the ok button
+        ok_btn = QPushButton("Ok")
+        ok_btn.clicked.connect(self.accept)
+        
+        #Adds the widgets to the v box layout
+        layout.add_widget(status_lbl)
+        layout.add_widget(ok_btn, alignment=Qt.AlignCenter)
+        
+        self.set_layout(layout)
 
 def main():
     app = QApplication(sys.argv)
