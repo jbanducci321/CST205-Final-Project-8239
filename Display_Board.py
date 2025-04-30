@@ -18,7 +18,9 @@ class MainWindow(QWidget):
         img_label = QLabel() #Creates a label object to hold an image
         
         #Calls the image search function
-        pil_img = search_images(image_search_term) #Change this to emotion
+
+        pil_img = search_images(emotion)
+
         self.pil_img = pil_img
         
         if pil_img:
