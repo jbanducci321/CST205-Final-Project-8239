@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLine
                                 QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, QComboBox)
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Slot, Qt
+from Display_Board import MainWindow
 from __feature__ import snake_case, true_property
 from io import BytesIO
 from get_images import search_images
@@ -22,12 +23,13 @@ class MyWindow(QWidget):
 
     #Title
     self.window_title = 'Mood Board Generator'
-    self.page_title = QLabel("Welcome to Your Mood Board!")
+    self.page_title = QLabel("Welcome to Your Mood Board Generator!")
     self.page_title.style_sheet = "font-size: 24px; font-weight: bold; margin-bottom: 20px;"
 
     #image
     self.image_label = QLabel()
     self.image_pixmap = QPixmap("mood2.png")
+    self.image_label.alignment = Qt.AlignCenter
     self.image_label.pixmap = self.image_pixmap
 
     #question 1
@@ -115,34 +117,8 @@ class MyWindow(QWidget):
   def open_win(self):
       selected_index = self.combo_box.current_index
       selected_mood = mood_list[selected_index]
-      self.new_win = NewWindow(selected_mood)
+      self.new_win = MainWindow(selected_mood)
       self.new_win.show()
-
-class NewWindow(QWidget):
-  def __init__(self, mood):
-      super().__init__()
-      self.window_title = f"Mood Board: {mood.capitalize()}"
-
-      mood_label = QLabel(f"You selected: {mood}")
-      img_label = QLabel()
-
-      pil_img = search_images(mood)
-
-      if pil_img:
-          buffer = BytesIO()
-          pil_img.save(buffer, format='PNG')
-          qimage = QImage.from_data(buffer.getvalue())
-          pixmap = QPixmap.from_image(qimage)
-          pixmap = pixmap.scaled(500, 500, Qt.KeepAspectRatio)
-          img_label.pixmap = pixmap
-      else:
-          img_label.set_text("No image found for this mood.")
-
-      layout = QVBoxLayout()
-      layout.add_widget(mood_label)
-      layout.add_widget(img_label)
-      self.set_layout(layout)
-
 
 main = MyWindow()
 main.show()
