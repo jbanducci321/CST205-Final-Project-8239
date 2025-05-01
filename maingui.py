@@ -29,8 +29,8 @@ class MyWindow(QWidget):
     #image
     self.image_label = QLabel()
     self.image_pixmap = QPixmap("mood2.png")
-    self.image_label.alignment = Qt.AlignCenter
-    self.image_label.pixmap = self.image_pixmap
+    scaled_pixmap = self.image_pixmap.scaled(500, 500,Qt.KeepAspectRatio)
+    self.image_label.pixmap = scaled_pixmap   
 
     #question 1
     self.label = QLabel("How are you feeling today?")
