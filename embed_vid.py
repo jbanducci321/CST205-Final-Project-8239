@@ -55,11 +55,11 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def dl_window(self):
-        dialog = SaveDialog(self.results[1])
+        dialog = SaveVideoWindow(self.results[1])
         dialog.exec()
 
 
-class SaveDialog(QDialog):
+class SaveVideoWindow(QDialog):
     def __init__(self, vid_url):
         super().__init__()
         self.setWindowTitle("Save Video")
