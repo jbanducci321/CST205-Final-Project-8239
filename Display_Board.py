@@ -9,8 +9,6 @@ from get_images import search_images
 from io import BytesIO
 import os
 
-'''Look into qstacked widget'''
-image_search_term = 'anxious'
 
 class MainWindow(QWidget):
     def __init__(self, emotion):
@@ -147,7 +145,7 @@ class StatusDialog(QDialog):
 
 def main():
     app = QApplication(sys.argv)
-    main = MainWindow()
+    main = MainWindow('happy')
     main.show()
     sys.exit(app.exec())
 

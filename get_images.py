@@ -7,7 +7,7 @@ import time #For testing
 
 #Returns a list of image objects
 def search_images(search_term):
-    my_key = 'GNav5YztHDAun6NxWxjBVfCL0NbaZv2qkHvXLpZQK8AeZ0M8OuLWKikV'
+    my_key = 'IpmqoqVdVAOhRx4hemlJT50lhHjux8HY3ImCokenhmRO5gGgxqcACKGT'
 
     url = "https://api.pexels.com/v1/search"
 
@@ -15,7 +15,7 @@ def search_images(search_term):
         "Authorization": my_key
     }
 
-    image_count = 55 #Determines how many images to retrieve
+    image_count = 30 #Determines how many images to retrieve
     
     while True:
         random_page = random.randint(1,80)
