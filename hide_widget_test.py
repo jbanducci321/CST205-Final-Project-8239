@@ -14,6 +14,7 @@ class InputWindow(QWidget):
     my_label = QLabel("Enter an emotion to generate a mood board")
     self.emotion_text = QLineEdit()
     btn = QPushButton("Enter")
+    self.emotion_text.returnPressed.connect(self.switch_window)
     vbox = QVBoxLayout()
 
     vbox.add_widget(my_label)

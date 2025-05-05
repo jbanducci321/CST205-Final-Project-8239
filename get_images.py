@@ -63,6 +63,13 @@ def search_images(search_term):
             'height': img.height} #Image height
             for img in images]
             
+            #Compares widtdh and height to get a pictures orientation
+            for img in image_info_list:
+                if img['width'] > img['height']:
+                    img['orientation'] = 'landscape'
+                else:
+                    img['orientation'] = 'portrait'
+            
             #Calls a function to create a collage out of the specified number of images
             collage_image = create_collage(search_term, image_info_list)
             

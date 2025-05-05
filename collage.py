@@ -15,20 +15,48 @@ def create_collage(emotion, image_info_list):
     #Creates an image to act as a background for the collage
     collage_background = Image.new('RGB', background_dimensions, background_color)
 
+    #Splits the list into a top and bottom row
+    half = len(image_info_list)//2
+    top_row = image_info_list[:half]
+    bot_row = image_info_list[half:]
+    
+    #Checks if either rows contain only portrait images
+    top_all_p = check_all_portrait(top_row)
+    bot_all_p = check_all_portrait(bot_row)
+    
+    #Sets up the row sepcific buffer sizes
+    if top_all_p:
+        top_row_buffer = buffer * 2
+    else:
+        top_row_buffer = buffer
+    
+    if bot_all_p:
+        bot_row_buffer = int(buffer * 2.5)
+    else:
+        bot_row_buffer = buffer
+    
+    #Sets up the initial x and y offsets
     offset_x = buffer
     offset_y = buffer - buffer//2
 
     #Loops through the images and places them on the background
     for i, img in enumerate(image_info_list):
         copy_image(img, collage_background, offset_x, offset_y)
-        offset_x += img['width'] + buffer
+        
+        #Chooses the buffer based on the row
+        if i < half:
+            row_buffer = top_row_buffer
+        else:
+            row_buffer = bot_row_buffer
+        
+        #Updates the x offset
+        offset_x += img['width'] + row_buffer
 
-        if (1 + i) == (len(image_info_list)//2): #Once half the images are placed, moves to next rows
+        if (1 + i) == half: #Once half the images are placed, moves to next rows
             offset_x = buffer
             offset_y += row_height + buffer
         
 
-    
     return collage_background
 
 #Function to calculate the optimal background size for the collage
@@ -81,6 +109,16 @@ def copy_image(img, target_img, offset_x, offset_y):
 
     target_img.paste(copy_img, (offset_x, offset_y))
 
+#Checks if a row of images contains only portrait images (returns a bool value)
+def check_all_portrait(row):
+    #Stores all the portrait images from a row into a list
+    portrait_check = [img for img in row if img['orientation'] == 'portrait']
+    
+    #Checks if the row contains only portrait images
+    if len(portrait_check) == len(row):
+        return True
+    else:
+        return False
 
 def main():
     pass
