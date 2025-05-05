@@ -5,8 +5,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import Qt, Slot
 import sys
-#Fallback incase it doesn't display the video on some systems.
 import os
+#Fallback incase it doesn't display the video on some systems.
+
 if "QTWEBENGINE_CHROMIUM_FLAGS" not in os.environ:
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-gpu"
 
