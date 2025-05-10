@@ -3,8 +3,7 @@ from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLine
                                 QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser)
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Slot
-#from Display_Board import MainWindow
-from Display_Board_copy import MainWindowCopy
+from Display_Board import MainWindow
 from __feature__ import snake_case, true_property
 
 
@@ -29,9 +28,8 @@ class InputWindow(QWidget):
   def switch_window(self):
     emotion = self.emotion_text.text.strip()
     if emotion:
-       #self.new_window = MainWindow(emotion)
-       self.new_window = MainWindowCopy(emotion)
-       self.new_window.show()
+       self.new_window = MainWindow(emotion)
+       self.new_window.show_maximized()
        self.hide()
 
     
