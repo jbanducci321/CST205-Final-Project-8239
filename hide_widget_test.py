@@ -32,8 +32,6 @@ class InputWindow(QWidget):
        self.new_window.show_maximized()
        self.hide()
 
-    
-
 
 app = QApplication([])
 main = InputWindow()

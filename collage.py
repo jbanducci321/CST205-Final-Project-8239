@@ -1,4 +1,5 @@
 from PIL import Image
+from color_pick import get_emotion_color
 
 #Takes the emotion and list of image objects
 def create_collage(emotion, image_info_list):
@@ -81,8 +82,9 @@ def get_background_dimensions(img_info, padding=100):
 #Function to get the background color based off of the emotion
 def get_background_color(emotion):
     
+    background_color = get_emotion_color(emotion)
     #happy, sad, neutral, mad, anxious
-
+    '''
     if emotion.lower() == 'happy':
         background_color = (255,200,100) #Light orange
     elif emotion.lower() == 'sad':
@@ -94,7 +96,7 @@ def get_background_color(emotion):
     elif emotion.lower() == 'anxious':
         background_color = 	(255, 228, 225) #Misty rosecolage.py: 
     else:
-        background_color = (255, 255, 255) #White
+        background_color = (255, 255, 255) #White'''
     
     return background_color
 
