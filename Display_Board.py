@@ -36,7 +36,7 @@ class MainWindow(QWidget):
             qimage = QImage.from_data(buffer.getvalue())
             pixmap = QPixmap.from_image(qimage)
             
-            pixmap = pixmap.scaled(1000, 600) #Sets the scale for the image label
+            pixmap = pixmap.scaled(600, 400, Qt.KeepAspectRatio) #Sets the scale for the image label
             
             img_label.pixmap = pixmap
             img_label.alignment = Qt.AlignCenter
@@ -51,7 +51,7 @@ class MainWindow(QWidget):
         html = f'''
         <html>
           <body>
-            <iframe width="50%" height="50%"
+            <iframe width="100%" height="100%"
               src="https://www.youtube.com/embed/{self.vid_urls[0]}"
               frameborder="0"
               allowfullscreen>
@@ -84,8 +84,8 @@ class MainWindow(QWidget):
         vid_vbox.add_widget(self.video_view)
         vid_vbox.add_widget(download_button, alignment=Qt.AlignCenter)
 
-        #VBox that is the main layout
-        main_layout = QVBoxLayout()
+        #HBox that is the main layout
+        main_layout = QHBoxLayout()
         #Add to main layout
         main_layout.add_layout(img_vbox)
         main_layout.add_layout(vid_vbox)
@@ -162,30 +162,32 @@ class SaveDialog(QDialog):
             status_dialog.exec()
         finally:
             self.accept() #Closes the dialog box after try/except resolves
+
 class SaveVideoWindow(QDialog):
     def __init__(self, vid_url):
         super().__init__()
-        self.setWindowTitle("Save Video")
+        self.window_title = "Save Video"
         self.vid_url = vid_url
 
         layout = QVBoxLayout()
 
         self.combo_box = QComboBox()
-        self.combo_box.addItems(['Download Video', 'Download Audio'])
+        self.combo_box.add_items(['Download Video', 'Download Audio'])
 
         self.save_button = QPushButton("Save")
-        self.save_button.setDefault(True)
+        self.save_button.set_default = True
         self.save_button.clicked.connect(self.dl_vid)
 
-        layout.addWidget(self.combo_box, alignment=Qt.AlignCenter)
-        layout.addWidget(self.save_button, alignment=Qt.AlignCenter)
+        layout.add_widget(self.combo_box, alignment=Qt.AlignCenter)
+        layout.add_widget(self.save_button, alignment=Qt.AlignCenter)
 
-        self.setLayout(layout)
+        self.set_layout(layout)
         self.resize(200, 200)
 
     @Slot()
     def dl_vid(self):
-        choice = self.combo_box.currentText()
+        choice = self.combo_box.current_text
+
 
         try:
             if choice == 'Download Video':
@@ -204,6 +206,7 @@ class SaveVideoWindow(QDialog):
 
         finally:
             self.accept()
+
 
 class StatusDialog(QDialog):
     def __init__(self, status_text):
