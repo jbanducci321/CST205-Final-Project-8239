@@ -11,7 +11,6 @@ from get_images import search_images
 app = QApplication([])
 
 
-mood_list = ['Choose a mood','sad', 'neutral','happy', 'angry', 'anxious']
 day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
 fun_list = ['Choose an answer', 'Today', 'Yesterday', 'This week', 'A while ago', 'I can\'t remember']
 
@@ -118,7 +117,8 @@ class MyWindow(QWidget):
   def open_win(self):
       selected_mood = self.mood_input.text.strip()
       self.new_win = MainWindow(selected_mood)
-      self.new_win.show()
+      self.new_win.show_maximized()
+      self.hide()
 
 main = MyWindow()
 main.show()
