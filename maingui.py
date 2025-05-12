@@ -34,9 +34,10 @@ class MyWindow(QWidget):
 
     #question 1
     self.label = QLabel("How are you feeling today?")
-    self.combo_box = QComboBox()
-    self.combo_box.add_items(mood_list)
-    self.combo_box.set_style_sheet("border: 2px solid black;")
+    self.mood_input = QLineEdit()
+    self.mood_input.placeholder_text = "Type a mood"
+    self.mood_input.set_style_sheet("border: 2px solid black;")
+
 
     #question 2
     self.label2 = QLabel("How is your day going?")
@@ -79,7 +80,7 @@ class MyWindow(QWidget):
     layout.add_spacing(20)
 
     layout.add_widget(self.label)
-    layout.add_widget(self.combo_box)
+    layout.add_widget(self.mood_input)
     layout.add_spacing(20)
 
     layout.add_widget(self.label2)
@@ -106,17 +107,16 @@ class MyWindow(QWidget):
     self.proceed_button.clicked.connect(self.open_win)
 
   @Slot()
-  def select_introvert():
-      self.selected_social = "Introverted"
-      
+  def select_introvert(self):
+    self.selected_social = "Introverted"
+
   @Slot()
-  def select_extrovert():
-      self.selected_social = "Extroverted"
+  def select_extrovert(self):
+    self.selected_social = "Extroverted"
 
   @Slot()
   def open_win(self):
-      selected_index = self.combo_box.current_index
-      selected_mood = mood_list[selected_index]
+      selected_mood = self.mood_input.text.strip()
       self.new_win = MainWindow(selected_mood)
       self.new_win.show()
 
