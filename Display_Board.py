@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
-                               QGroupBox, QDialog, QLineEdit, QLayout)
+                               QGroupBox, QDialog, QLineEdit, QLayout, QScrollArea)
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Qt
 from PySide6.QtCore import Slot
@@ -32,26 +32,49 @@ class MainWindow(QWidget):
             
             img_label.pixmap = pixmap
             img_label.alignment = Qt.AlignCenter
+
+        mood_board_label = QLabel()
+        pixmap = QPixmap("mood_board.png").scaled(1000, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        mood_board_label.pixmap = pixmap
+        mood_board_label.alignment = Qt.AlignCenter
         
         #Creates a vbox to store the image label and related widgets
         img_vbox = QVBoxLayout()
-        
+        img_vbox.set_alignment(Qt.AlignTop)
+
         save_lable = QLabel("Push the button to save the mood board")
-        save_lable.alignment = Qt.AlignCenter #Aligns the label to the center
-        
-        
+        save_lable.alignment = Qt.AlignCenter
+
         save_btn = QPushButton("Save")
-        save_btn.clicked.connect(self.save_image) #Connects the button to the save image fuction
+        save_btn.clicked.connect(self.save_image)
         save_btn.set_fixed_width(200)
-        
 
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
+        
+        main_layout_vbox = QVBoxLayout()
+        main_layout_vbox.add_layout(img_vbox)
+        
+        mood = QVBoxLayout()
+        mood.add_widget(mood_board_label)
+        
+        main_layout_vbox.add_layout(mood)
 
-        #ADD CODE FOR DISPLAYING THE VIDEO
+        # Make a container widget for the vbox layout
+        scroll_container = QWidget()
+        scroll_container.set_layout(main_layout_vbox)
 
-        self.set_layout(img_vbox)
+        # Create scroll area and put the container in it
+        scroll_area = QScrollArea()
+        scroll_area.set_widget(scroll_container)
+        scroll_area.set_widget_resizable = True
+
+        # Top-level layout for the MainWindow
+        main_layout = QVBoxLayout()
+        main_layout.add_widget(scroll_area)
+
+        self.set_layout(main_layout)
         self.window_title = "Media Display"
     
     
