@@ -118,7 +118,8 @@ class MyWindow(QWidget):
       selected_index = self.combo_box.current_index
       selected_mood = mood_list[selected_index]
       self.new_win = MainWindow(selected_mood)
-      self.new_win.show()
+      self.new_win.show_maximized()
+      self.hide()
 
 main = MyWindow()
 main.show()
