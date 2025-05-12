@@ -9,8 +9,6 @@ from get_images import search_images
 from io import BytesIO
 import os
 
-'''Look into qstacked widget'''
-image_search_term = 'anxious'
 
 class MainWindow(QWidget):
     def __init__(self, emotion):
@@ -33,6 +31,7 @@ class MainWindow(QWidget):
             pixmap = pixmap.scaled(1000, 600) #Sets the scale for the image label
             
             img_label.pixmap = pixmap
+            img_label.alignment = Qt.AlignCenter
         
         #Creates a vbox to store the image label and related widgets
         img_vbox = QVBoxLayout()
@@ -47,7 +46,7 @@ class MainWindow(QWidget):
         
 
         img_vbox.add_widget(img_label)
-        img_vbox.add_widget(save_lable)
+        img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
 
         #ADD CODE FOR DISPLAYING THE VIDEO
@@ -84,7 +83,7 @@ class SaveDialog(QDialog):
         #Adds all the widgets to the v box layout
         layout.add_widget(QLabel("File Name:"))
         layout.add_widget(self.name_input)
-        layout.add_widget(QLabel("Leave file name blank for defualt (add .png)"))
+        layout.add_widget(QLabel("Leave file name blank for default (add .png)"))
         layout.add_widget(QLabel())
         layout.add_widget(QLabel("Save Location:"))
         layout.add_widget(self.path_input)
@@ -147,8 +146,8 @@ class StatusDialog(QDialog):
 
 def main():
     app = QApplication(sys.argv)
-    main = MainWindow()
-    main.show()
+    main = MainWindow('anxious')
+    main.show_maximized()
     sys.exit(app.exec())
 
 if __name__ == "__main__":
