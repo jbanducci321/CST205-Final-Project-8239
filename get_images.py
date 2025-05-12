@@ -7,7 +7,7 @@ import time #For testing
 
 #Returns a list of image objects
 def search_images(search_term):
-    my_key = 'IpmqoqVdVAOhRx4hemlJT50lhHjux8HY3ImCokenhmRO5gGgxqcACKGT'
+    my_key = 'GNav5YztHDAun6NxWxjBVfCL0NbaZv2qkHvXLpZQK8AeZ0M8OuLWKikV'
 
     url = "https://api.pexels.com/v1/search"
 
