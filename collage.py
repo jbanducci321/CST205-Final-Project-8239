@@ -1,4 +1,5 @@
 from PIL import Image
+from color_pick import get_emotion_color
 
 #Takes the emotion and list of image objects
 def create_collage(emotion, image_info_list):
@@ -15,19 +16,42 @@ def create_collage(emotion, image_info_list):
     #Creates an image to act as a background for the collage
     collage_background = Image.new('RGB', background_dimensions, background_color)
 
+    #Splits the image list into two rows
+    half = len(image_info_list)//2
+    top_row = image_info_list[:half] #Stores first half of the list
+    bot_row = image_info_list[half:] #Stores second half of the list
+    
+    #Checks if either row has only portraits and sets the row-specific buffer sizes
+    if check_all_portrait(top_row):
+        top_row_buffer = int(buffer + buffer*1.6)
+    else:
+        top_row_buffer = buffer
+
+    if check_all_portrait(bot_row):
+        bottom_row_buffer = int(buffer + buffer*1.6)
+    else:
+        bottom_row_buffer = buffer
+
+    #Initial position to place the first images
     offset_x = buffer
     offset_y = buffer - buffer//2
 
     #Loops through the images and places them on the background
     for i, img in enumerate(image_info_list):
-        copy_image(img, collage_background, offset_x, offset_y)
-        offset_x += img['width'] + buffer
+        copy_image(img, collage_background, offset_x, offset_y) #Pastes the image
+        
+        if i < half: #Selects the buffer based on the row
+            row_buffer = top_row_buffer
+        else:
+            row_buffer = bottom_row_buffer
+        
+        #Updates the x offset
+        offset_x += img['width'] + row_buffer
 
-        if (1 + i) == (len(image_info_list)//2): #Once half the images are placed, moves to next rows
+        #Once half the images are placed, moves to next rows
+        if (1 + i) == half: 
             offset_x = buffer
             offset_y += row_height + buffer
-        
-
     
     return collage_background
 
@@ -58,8 +82,9 @@ def get_background_dimensions(img_info, padding=100):
 #Function to get the background color based off of the emotion
 def get_background_color(emotion):
     
+    background_color = get_emotion_color(emotion)
     #happy, sad, neutral, mad, anxious
-
+    '''
     if emotion.lower() == 'happy':
         background_color = (255,200,100) #Light orange
     elif emotion.lower() == 'sad':
@@ -71,7 +96,7 @@ def get_background_color(emotion):
     elif emotion.lower() == 'anxious':
         background_color = 	(255, 228, 225) #Misty rosecolage.py: 
     else:
-        background_color = (255, 255, 255) #White
+        background_color = (255, 255, 255) #White'''
     
     return background_color
 
@@ -81,6 +106,16 @@ def copy_image(img, target_img, offset_x, offset_y):
 
     target_img.paste(copy_img, (offset_x, offset_y))
 
+#Checks if a row of images contains only portrait images (returns a bool value)
+def check_all_portrait(row):
+    #Stores all the portrait images from a row into a list
+    portrait_check = [img for img in row if img['orientation'] == 'portrait']
+    
+    #Checks if the row contains only portrait images
+    if len(portrait_check) == len(row):
+        return True
+    else:
+        return False
 
 def main():
     pass
