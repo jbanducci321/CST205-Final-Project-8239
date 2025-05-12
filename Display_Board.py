@@ -1,14 +1,23 @@
 import sys
-from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
-                               QGroupBox, QDialog, QLineEdit, QLayout)
-from PySide6.QtGui import QPixmap, QImage
-from PySide6.QtCore import Qt
-from PySide6.QtCore import Slot
-from __feature__ import snake_case, true_property
-from get_images import search_images
-from io import BytesIO
 import os
+from io import BytesIO
+from PySide6.QtCore import Qt, Slot
+from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtWidgets import (
+    QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout,
+    QPushButton, QComboBox, QGroupBox, QDialog, QLineEdit, QLayout, QHBoxLayout
+)
+from PySide6.QtWebEngineWidgets import QWebEngineView
+from __feature__ import snake_case, true_property
 
+from get_images import search_images
+from get_vid import search_youtube_videos
+from dl_yt import download_video, download_audio
+
+#Fallback incase it doesn't display the video on some systems.
+
+if "QTWEBENGINE_CHROMIUM_FLAGS" not in os.environ:
+    os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-gpu"
 
 class MainWindow(QWidget):
     def __init__(self, emotion):
@@ -16,7 +25,6 @@ class MainWindow(QWidget):
         img_label = QLabel() #Creates a label object to hold an image
         
         #Calls the image search function
-
         pil_img = search_images(emotion)
 
         self.pil_img = pil_img
@@ -35,23 +43,54 @@ class MainWindow(QWidget):
         
         #Creates a vbox to store the image label and related widgets
         img_vbox = QVBoxLayout()
-        
+
+        #WebEngineView
+        self.video_view = QWebEngineView()
+        #Get video URLs
+        self.vid_urls = search_youtube_videos(emotion + "video")
+        html = f'''
+        <html>
+          <body>
+            <iframe width="50%" height="50%"
+              src="https://www.youtube.com/embed/{self.vid_urls[0]}"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          </body>
+        </html>
+        '''
+        self.video_view.set_html(html)
+
+        # Create the video download button
+        download_button = QPushButton("Download Video")
+        download_button.clicked.connect(self.dl_window)
+
+        #VBox for the video view
+        vid_vbox = QVBoxLayout()
+
         save_lable = QLabel("Push the button to save the mood board")
         save_lable.alignment = Qt.AlignCenter #Aligns the label to the center
-        
         
         save_btn = QPushButton("Save")
         save_btn.clicked.connect(self.save_image) #Connects the button to the save image fuction
         save_btn.set_fixed_width(200)
         
-
+        #Add widgets to img_vbox
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
 
-        #ADD CODE FOR DISPLAYING THE VIDEO
+        #Add widgets to vid_vbox
+        vid_vbox.add_widget(self.video_view)
+        vid_vbox.add_widget(download_button, alignment=Qt.AlignCenter)
 
-        self.set_layout(img_vbox)
+        #VBox that is the main layout
+        main_layout = QVBoxLayout()
+        #Add to main layout
+        main_layout.add_layout(img_vbox)
+        main_layout.add_layout(vid_vbox)
+
+        self.set_layout(main_layout)
         self.window_title = "Media Display"
     
     
@@ -61,6 +100,10 @@ class MainWindow(QWidget):
         dialog.exec()
 
     #Add code for method for downloading the video
+    @Slot()
+    def dl_window(self):
+        dialog = SaveVideoWindow(self.vid_urls[0])
+        dialog.exec()
 
 #Dialog class for displaying the window for saving the image
 class SaveDialog(QDialog):
@@ -119,6 +162,48 @@ class SaveDialog(QDialog):
             status_dialog.exec()
         finally:
             self.accept() #Closes the dialog box after try/except resolves
+class SaveVideoWindow(QDialog):
+    def __init__(self, vid_url):
+        super().__init__()
+        self.setWindowTitle("Save Video")
+        self.vid_url = vid_url
+
+        layout = QVBoxLayout()
+
+        self.combo_box = QComboBox()
+        self.combo_box.addItems(['Download Video', 'Download Audio'])
+
+        self.save_button = QPushButton("Save")
+        self.save_button.setDefault(True)
+        self.save_button.clicked.connect(self.dl_vid)
+
+        layout.addWidget(self.combo_box, alignment=Qt.AlignCenter)
+        layout.addWidget(self.save_button, alignment=Qt.AlignCenter)
+
+        self.setLayout(layout)
+        self.resize(200, 200)
+
+    @Slot()
+    def dl_vid(self):
+        choice = self.combo_box.currentText()
+
+        try:
+            if choice == 'Download Video':
+                download_video(self.vid_url)
+                status_text = "Video saved successfully"
+            else:
+                download_audio(self.vid_url)
+                status_text = "Audio saved successfully"
+
+            status_dialog = StatusDialog(status_text)
+            status_dialog.exec()
+
+        except Exception as e:
+            status_dialog = StatusDialog(f"Error saving: {e}")
+            status_dialog.exec()
+
+        finally:
+            self.accept()
 
 class StatusDialog(QDialog):
     def __init__(self, status_text):
