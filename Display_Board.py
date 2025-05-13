@@ -1,3 +1,8 @@
+'''Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
+bar for enhanced readability
+Worked on by: Jacob Banducci and Joshua Sumagong
+5/12/2025'''
+
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
                                QGroupBox, QDialog, QLineEdit, QLayout, QScrollArea)
@@ -8,6 +13,7 @@ from __feature__ import snake_case, true_property
 from get_images import search_images
 from io import BytesIO
 import os
+import string
 
 
 class MainWindow(QWidget):
@@ -15,8 +21,26 @@ class MainWindow(QWidget):
         super().__init__()
         img_label = QLabel() #Creates a label object to hold an image
         
+        #Cleans up the string for emotion
+        emotion = emotion.strip() #Removes leading/trailing whitespace
+        
+        if emotion:
+            words = emotion.split() #Splits the string into individual words (if a sentence is passed)
+            if words:
+                emotion = words[0] #Takes only the first word in the list
+            else:
+                emotion = ''
+        else:
+            emotion = ''
+        
+        #Removes punctuation
+        emotion = "".join(char for char in emotion if char not in string.punctuation)
+        
+        #Defaults to neutral if the string is empty
+        if not emotion:
+            emotion = 'neutral'
+        
         #Calls the image search function
-
         pil_img = search_images(emotion)
 
         self.pil_img = pil_img

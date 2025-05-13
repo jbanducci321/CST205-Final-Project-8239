@@ -1,3 +1,8 @@
+'''Takes a specified number of images and uses them to create a collage. Background color changes 
+depending on the emotion that is passed
+Worked on by: Jacob Banducci
+5/10/2025'''
+
 from PIL import Image
 from color_pick import get_emotion_color
 
