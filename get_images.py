@@ -1,13 +1,17 @@
+'''Takes a string input and returns a specified number of images, using an API, which is then passed to the
+collage function and returns a collage
+Worked on by: Jacob Banducci
+5/1/2025'''
+
 import requests
 import random
 from PIL import Image
 from io import BytesIO
 from collage import create_collage
-import time #For testing
 
 #Returns a list of image objects
 def search_images(search_term):
-    my_key = 'GNav5YztHDAun6NxWxjBVfCL0NbaZv2qkHvXLpZQK8AeZ0M8OuLWKikV'
+    my_key = 'IpmqoqVdVAOhRx4hemlJT50lhHjux8HY3ImCokenhmRO5gGgxqcACKGT'
 
     url = "https://api.pexels.com/v1/search"
 

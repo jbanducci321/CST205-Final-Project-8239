@@ -1,4 +1,7 @@
-import string
+'''Takes a string input and uses the emolex to pick an appropriate background color for the collage
+Worked on by: Jacob Banducci
+5/11/2025'''
+
 import random
 
 #Defines emotion categories to help with sorting
@@ -42,7 +45,6 @@ for emotion, filename in emotion_files.items():
         emotion_word_sets[emotion] = words
 
 def get_emotion_color(emotion):
-    emotion = emotion.lower().translate(str.maketrans('', '', string.punctuation))
 
     #Checks if the passed word is in any of the emolex sets and stores them in a list
     matched_emotions = [emo for emo, word_set in emotion_word_sets.items() if emotion in word_set]

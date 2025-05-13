@@ -1,11 +1,17 @@
-import sys
+'''Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
+bar for enhanced readability
+Worked on by: Jacob Banducci and Joshua Sumagang
+5/12/2025'''
 import os
+import sys
+import string
 from io import BytesIO
+
 from PySide6.QtCore import Qt, Slot
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout,
-    QPushButton, QComboBox, QGroupBox, QDialog, QLineEdit, QLayout, QHBoxLayout
+    QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout, QPushButton,
+    QComboBox, QGroupBox, QDialog, QLineEdit, QLayout, QHBoxLayout, QScrollArea
 )
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from __feature__ import snake_case, true_property
@@ -24,6 +30,25 @@ class MainWindow(QWidget):
         super().__init__()
         img_label = QLabel() #Creates a label object to hold an image
         
+        #Cleans up the string for emotion
+        emotion = emotion.strip() #Removes leading/trailing whitespace
+        
+        if emotion:
+            words = emotion.split() #Splits the string into individual words (if a sentence is passed)
+            if words:
+                emotion = words[0] #Takes only the first word in the list
+            else:
+                emotion = ''
+        else:
+            emotion = ''
+        
+        #Removes punctuation
+        emotion = "".join(char for char in emotion if char not in string.punctuation)
+        
+        #Defaults to neutral if the string is empty
+        if not emotion:
+            emotion = 'neutral'
+
         #Calls the image search function
         pil_img = search_images(emotion)
 
@@ -36,13 +61,30 @@ class MainWindow(QWidget):
             qimage = QImage.from_data(buffer.getvalue())
             pixmap = QPixmap.from_image(qimage)
             
-            pixmap = pixmap.scaled(600, 400, Qt.KeepAspectRatio) #Sets the scale for the image label
+            pixmap = pixmap.scaled(1000, 600, Qt.KeepAspectRatio) #Sets the scale for the image label
             
             img_label.pixmap = pixmap
             img_label.alignment = Qt.AlignCenter
         
         #Creates a vbox to store the image label and related widgets
         img_vbox = QVBoxLayout()
+        img_vbox.set_alignment(Qt.AlignTop)
+
+        save_lable = QLabel("Push the button to save the mood board")
+        save_lable.alignment = Qt.AlignCenter #Aligns the label to the center
+
+        save_btn = QPushButton("Save")
+        save_btn.clicked.connect(self.save_image) #Connects the button to the save image fuction
+        save_btn.set_fixed_width(200)
+
+        #Add widgets to img_vbox
+        img_vbox.add_widget(img_label)
+        img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
+        img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
+
+        #Creates a main display vbox and adds the img_vbox to it
+        main_display_vbox = QVBoxLayout()
+        main_display_vbox.add_layout(img_vbox)
 
         #WebEngineView
         self.video_view = QWebEngineView()
@@ -60,35 +102,32 @@ class MainWindow(QWidget):
         </html>
         '''
         self.video_view.set_html(html)
-
+        self.video_view.set_fixed_size(800, 450)
         # Create the video download button
         download_button = QPushButton("Download Video")
         download_button.clicked.connect(self.dl_window)
 
         #VBox for the video view
         vid_vbox = QVBoxLayout()
-
-        save_lable = QLabel("Push the button to save the mood board")
-        save_lable.alignment = Qt.AlignCenter #Aligns the label to the center
-        
-        save_btn = QPushButton("Save")
-        save_btn.clicked.connect(self.save_image) #Connects the button to the save image fuction
-        save_btn.set_fixed_width(200)
-        
-        #Add widgets to img_vbox
-        img_vbox.add_widget(img_label)
-        img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
-        img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
-
         #Add widgets to vid_vbox
-        vid_vbox.add_widget(self.video_view)
+        vid_vbox.add_widget(self.video_view, stretch = 1, alignment=Qt.AlignCenter)
         vid_vbox.add_widget(download_button, alignment=Qt.AlignCenter)
 
-        #HBox that is the main layout
-        main_layout = QHBoxLayout()
-        #Add to main layout
-        main_layout.add_layout(img_vbox)
-        main_layout.add_layout(vid_vbox)
+        main_display_vbox.add_layout(vid_vbox)
+
+        #Creates a contianer to hold the entire layout
+        scroll_container = QWidget()
+        scroll_container.set_layout(main_display_vbox) #Adds the main layout vbox to the new container
+        main_display_vbox.set_alignment = Qt.AlignCenter
+
+        #Creates a scroll area to enable scrolling
+        scroll_area = QScrollArea()
+        scroll_area.set_widget(scroll_container)
+        scroll_area.widget_resizable = True #Ensures scroll area fills up the window its in
+        
+        #Creates the top-level layout for the display
+        main_layout = QVBoxLayout()
+        main_layout.add_widget(scroll_area) #Adds the scroll area to it
 
         self.set_layout(main_layout)
         self.window_title = "Media Display"
@@ -99,7 +138,6 @@ class MainWindow(QWidget):
         dialog = SaveDialog(self.pil_img) #Passes the image object to the new window
         dialog.exec()
 
-    #Add code for method for downloading the video
     @Slot()
     def dl_window(self):
         dialog = SaveVideoWindow(self.vid_urls[0])
@@ -187,7 +225,6 @@ class SaveVideoWindow(QDialog):
     @Slot()
     def dl_vid(self):
         choice = self.combo_box.current_text
-
 
         try:
             if choice == 'Download Video':
