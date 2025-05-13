@@ -1,31 +1,34 @@
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLineEdit, 
-                                QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, QComboBox)
-from PySide6.QtGui import QPixmap, QImage
+                                QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, 
+                                QMainWindow, QComboBox)
+# from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Slot, Qt
 from __feature__ import snake_case, true_property
 
-app = QApplication([])
 
-class PrimaryWindow(QWidget):
+class Page1(QWidget):
     def __init__(self):
         super().__init__()
-        vbox = QVBoxLayout()
-        second_page = QLabel("Welcome to the 1st Page")
-        my_second_button = QPushButton("Enter")
-        self.my_lbl = QLabel()
-        my_second_button.clicked.connect(self.on_click)
+        main_menu = QLabel("Welcome to the First Page")
+        enter_btn = QPushButton("Enter")
+        self.my_label = QLabel()
+        enter_btn.clicked.connect(self.on_click)
 
-        vbox.add_widget(second_page)
-        vbox.add_widget(my_second_button)
-        vbox.add_widget(self.my_lbl)
+        vbox = QVBoxLayout()
+        vbox.add_widget(main_menu)
+        vbox.add_widget(enter_btn)
+        vbox.add_widget(self.my_label)
         self.set_layout(vbox)
         self.show()
 
-    @Slot()  
-    def on_click(self):
-        self.my_lbl.text = "Success!"
 
-primary_window = PrimaryWindow()
-primary_window.show()
-sys.exit(app.exec())
+    @Slot()
+    def on_click(self):
+        self.my_label.text = "Success!"
+
+
+# app = QApplication([])
+# page_1 = Page1()
+# page_1.show()
+# sys.exit(app.exec())    
