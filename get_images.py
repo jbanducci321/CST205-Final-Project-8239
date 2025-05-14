@@ -20,11 +20,11 @@ def search_images(search_term):
     }
 
     image_count = 40 #Determines how many images to retrieve
-    max_tries = 30 #Number of tries to get the images before giving up
+    max_tries = 60 #Number of tries to get the images before giving up
     try_count = 0
     
     while True:
-        random_page = random.randint(1,80)
+        random_page = random.randint(1,40)
         params = {
             "query": search_term,
             "per_page": image_count, 

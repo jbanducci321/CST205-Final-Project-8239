@@ -138,7 +138,7 @@ class MyWindow(QWidget):
       #selected_mood = mood_list[selected_index]
       self.new_win = MainWindow(emotion)
       self.new_win.show_maximized()
-      self.close()
+      self.hide()
 
 
 
@@ -198,11 +198,16 @@ class MainWindow(QWidget):
         save_btn.clicked.connect(self.save_image) #Connects the button to the save image fuction
         save_btn.set_fixed_width(200)
 
+        #Lets you go back to the 
+        back_button = QPushButton('Back to Home')
+        back_button.clicked.connect(self.back_btn)
+
         #Add widgets to img_vbox
         img_vbox.add_widget(title_label, alignment=Qt.AlignCenter)
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
+        
 
         #Creates a main display vbox and adds the img_vbox to it
         main_display_vbox = QVBoxLayout()
@@ -211,7 +216,7 @@ class MainWindow(QWidget):
         #WebEngineView
         self.video_view = QWebEngineView()
         #Get video URLs
-        self.vid_urls = search_youtube_videos(emotion + "video")
+        self.vid_urls = search_youtube_videos(emotion)
         html = f'''
         <html>
           <body>
@@ -250,6 +255,7 @@ class MainWindow(QWidget):
         #Creates the top-level layout for the display
         main_layout = QVBoxLayout()
         main_layout.add_widget(scroll_area) #Adds the scroll area to it
+        main_layout.add_widget(back_button, alignment=Qt.AlignCenter)
 
         self.set_layout(main_layout)
         self.window_title = "Media Display"
@@ -264,6 +270,12 @@ class MainWindow(QWidget):
     def dl_window(self):
         dialog = SaveVideoWindow(self.vid_urls[1])
         dialog.exec()
+    
+    @Slot()
+    def back_btn(self):
+        main_window = MyWindow()
+        main_window.show()
+        self.close()
 
 #Dialog class for displaying the window for saving the image
 class SaveDialog(QDialog):
