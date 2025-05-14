@@ -105,6 +105,7 @@ class MyWindow(QWidget):
     self.set_layout(layout)
 
     self.proceed_button.clicked.connect(self.open_win)
+    self.main_emotion.returnPressed.connect(self.open_win)
 
   @Slot()
   def select_introvert():
