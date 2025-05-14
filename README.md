@@ -11,3 +11,4 @@ Link to Repositiory: https://github.com/jbanducci321/CST205-Final-Project-8239
 Link to Trello: https://trello.com/b/LFwEbo7H/cst-205-final-project
 Future Work: 
 Add a better way to format the images onto the collage background to avoid spacing issues
+
