@@ -1,3 +1,10 @@
+'''
+Test code to display videos using a QWebEngineView. 
+This will be incorporated into the main media display window.
+5/13/25
+Worked on by: Joshua Sumagang
+'''
+
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout,
     QPushButton, QComboBox, QGroupBox, QDialog, QLineEdit, QLayout

@@ -32,7 +32,8 @@ class MainWindow(QWidget):
         
         #Cleans up the string for emotion
         emotion = emotion.strip() #Removes leading/trailing whitespace
-        
+        emotion = emotion.lower()
+
         if emotion:
             words = emotion.split() #Splits the string into individual words (if a sentence is passed)
             if words:
@@ -140,7 +141,7 @@ class MainWindow(QWidget):
 
     @Slot()
     def dl_window(self):
-        dialog = SaveVideoWindow(self.vid_urls[0])
+        dialog = SaveVideoWindow(self.vid_urls[1])
         dialog.exec()
 
 #Dialog class for displaying the window for saving the image

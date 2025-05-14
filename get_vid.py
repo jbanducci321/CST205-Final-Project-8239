@@ -1,3 +1,10 @@
+'''
+Function to get video search results
+CST-205
+Uses the youtube google API to obtain a list of video urls from a search string.
+5/13/25
+Joshua Sumagang
+'''
 #API KEY AIzaSyBgxL4_sHM9p4Wl6WL21xB1I1LTNykrOF8
 from googleapiclient.discovery import build
 import random
@@ -14,13 +21,6 @@ def search_youtube_videos(query):
         maxResults=10
     ).execute()
 
-    # video_urls = []
-    # for item in response["items"]:
-    #     video_id = item["id"]["videoId"]
-    #     video_url = f"https://www.youtube.com/watch?v={video_id}"
-    #     video_urls.append(video_url)
-    #     video_urls.append(video_id)
-    
     video_info = []
     random_index = random.randint(0, len(response["items"]) - 1)
     video_id = response["items"][random_index]["id"]["videoId"]

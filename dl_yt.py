@@ -1,3 +1,11 @@
+'''
+Function to download videos given a url.
+CST-205
+Developed two functions, download_video and download_audio that utilize the yt_dlp library.
+Using the os library it will download videos to the users' 'Downloads' path.
+5/13/25
+Joshua Sumagang
+'''
 import yt_dlp
 import os
 import time
