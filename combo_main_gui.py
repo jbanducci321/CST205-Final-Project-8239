@@ -6,7 +6,7 @@
 # Authors: 
 #   - Brianna Magallon - Designed and built the main user interface, including the layout, input questions, and logic for launching the mood board window. (MyWindow and Maingui.py)
 #   - Joshua Sumagang - Video get, download, and display functionality
-#   - Mohammad Shahroudi - main_gui.py
+#   - Mohammad Shahroudi - testing and playing around with thingsd that we could add.
 #   - Jacob Banducci- Worked on the image API functions, the collage creator, background code with the emolex and MainWindow GUI
 # Date: May 14, 2025
 
