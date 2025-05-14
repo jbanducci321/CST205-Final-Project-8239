@@ -1,9 +1,13 @@
+'''Takes a string input and returns a specified number of images, using an API, which is then passed to the
+collage function and returns a collage
+Worked on by: Jacob Banducci
+5/1/2025'''
+
 import requests
 import random
 from PIL import Image
 from io import BytesIO
 from collage import create_collage
-import time #For testing
 
 #Returns a list of image objects
 def search_images(search_term):
