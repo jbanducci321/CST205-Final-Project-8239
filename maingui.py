@@ -33,10 +33,11 @@ class MyWindow(QWidget):
     self.image_label.pixmap = scaled_pixmap   
 
     #question 1
-    self.label = QLabel("How are you feeling today?")
-    self.combo_box = QComboBox()
-    self.combo_box.add_items(mood_list)
-    self.combo_box.set_style_sheet("border: 2px solid black;")
+    self.label = QLabel("Enter what emotion you're feeling right now (one word)")
+    self.main_emotion = QLineEdit()
+    #self.combo_box = QComboBox()
+    #self.combo_box.add_items(mood_list)
+    #self.combo_box.set_style_sheet("border: 2px solid black;")
 
     #question 2
     self.label2 = QLabel("How is your day going?")
@@ -79,7 +80,7 @@ class MyWindow(QWidget):
     layout.add_spacing(20)
 
     layout.add_widget(self.label)
-    layout.add_widget(self.combo_box)
+    layout.add_widget(self.main_emotion)
     layout.add_spacing(20)
 
     layout.add_widget(self.label2)
@@ -115,9 +116,9 @@ class MyWindow(QWidget):
 
   @Slot()
   def open_win(self):
-      selected_index = self.combo_box.current_index
-      selected_mood = mood_list[selected_index]
-      self.new_win = MainWindow(selected_mood)
+      emotion = self.main_emotion.text
+      #selected_mood = mood_list[selected_index]
+      self.new_win = MainWindow(emotion)
       self.new_win.show_maximized()
       self.hide()
 

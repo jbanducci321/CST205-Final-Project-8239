@@ -23,6 +23,7 @@ class MainWindow(QWidget):
         
         #Cleans up the string for emotion
         emotion = emotion.strip() #Removes leading/trailing whitespace
+        emotion = emotion.lower()
         
         if emotion:
             words = emotion.split() #Splits the string into individual words (if a sentence is passed)
@@ -42,6 +43,10 @@ class MainWindow(QWidget):
         
         #Calls the image search function
         pil_img = search_images(emotion)
+        
+        #Creates a label to display specified emotion to the user
+        emotion_label = QLabel(f'Displaying media related to: {emotion.capitalize()}')
+        emotion_label.style_sheet = 'font-size: 24px; font-weight: bold; margin-bottom: 20px;'
 
         self.pil_img = pil_img
         
@@ -78,6 +83,7 @@ class MainWindow(QWidget):
         save_btn.set_fixed_width(200)
 
         #Adds the widgets to the vbox for the image
+        img_vbox.add_widget(emotion_label, alignment=Qt.AlignCenter)
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
