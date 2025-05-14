@@ -8,12 +8,11 @@ Video related methods and widgets worked on by Joshua Sumagong
 5/12/2025'''
 
 import os
+import sys
 import string
 from io import BytesIO
+
 from PySide6.QtCore import Qt, Slot
-import sys
-from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
-                               QGroupBox, QDialog, QLineEdit, QLayout, QScrollArea)
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout, QPushButton,
@@ -27,14 +26,9 @@ from get_vid import search_youtube_videos
 from dl_yt import download_video, download_audio
 
 #Fallback incase it doesn't display the video on some systems.
-
 if "QTWEBENGINE_CHROMIUM_FLAGS" not in os.environ:
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-gpu"
 
-
-from io import BytesIO
-import os
-import string
 
 #Window for displaying the media retrieved from the emotion entered
 
@@ -116,11 +110,6 @@ class MainWindow(QWidget):
         main_display_vbox = QVBoxLayout()
         main_display_vbox.add_layout(img_vbox)
         
-        #Creates a vbox for the video display
-        vid_vbox = QVBoxLayout()
-        vid_vbox.add_widget(mood_board_label) #FOR TESTING DELETE LATER
-        
-        main_display_vbox.add_layout(vid_vbox)
 
         #Creates a contianer to hold the entire layout
         scroll_container = QWidget()
@@ -132,11 +121,6 @@ class MainWindow(QWidget):
         scroll_area.set_widget(scroll_container)
         scroll_area.widget_resizable = True #Ensures scroll area fills up the window its in
         
-
-
-        #Creates a main display vbox and adds the img_vbox to it
-        main_display_vbox = QVBoxLayout()
-        main_display_vbox.add_layout(img_vbox)
 
         #WebEngineView
         self.video_view = QWebEngineView()
