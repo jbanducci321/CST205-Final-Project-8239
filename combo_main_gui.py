@@ -15,13 +15,20 @@ from dl_yt import download_video, download_audio
 
 #Fallback incase it doesn't display the video on some systems.
 
+# CST 205
+# Mood Board Project
+# Authors: Mohammad Shahroudi and Brianna Magallon
+# Date: May 14, 2025
+
 if "QTWEBENGINE_CHROMIUM_FLAGS" not in os.environ:
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-gpu"
 
 app = QApplication([])
 
-mood_list = ['Choose a mood','sad', 'neutral','happy', 'angry', 'anxious']
+# mood_list = ['Choose a mood','sad', 'neutral','happy', 'angry', 'anxious']
+# The list of how is your day going.
 day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
+# The list of when is the last time that you did something fun.
 fun_list = ['Choose an answer', 'Today', 'Yesterday', 'This week', 'A while ago', 'I can\'t remember']
 
 class MyWindow(QWidget):
