@@ -1,4 +1,6 @@
-'''Takes a string input and returns a specified number of images, using an API, which is then passed to the
+'''Image Retrieval Function
+CST-205
+Takes a string input and returns a specified number of images, using an API, which is then passed to the
 collage function and returns a collage
 Worked on by: Jacob Banducci
 5/1/2025'''
@@ -87,7 +89,8 @@ def search_images(search_term):
 
 
 def main():
-    search_images('anxious')
+    img = search_images('anxious')
+    img.show()
 
 if __name__ == "__main__":
     main()

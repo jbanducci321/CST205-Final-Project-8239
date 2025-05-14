@@ -1,6 +1,10 @@
-'''Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
+'''Media Display GUI
+CST-205
+Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
 bar for enhanced readability
-Worked on by: Jacob Banducci and Joshua Sumagong
+MainWindow on by: Jacob Banducci and Joshua Sumagong
+Image related methods and widget worked on by: Jacob Banducci
+Video related methods and widgets worked on by Joshua Sumagong
 5/12/2025'''
 
 import sys
@@ -15,7 +19,7 @@ from io import BytesIO
 import os
 import string
 
-
+#Window for displaying the media retrieved from the emotion entered
 class MainWindow(QWidget):
     def __init__(self, emotion):
         super().__init__()
@@ -23,6 +27,7 @@ class MainWindow(QWidget):
         
         #Cleans up the string for emotion
         emotion = emotion.strip() #Removes leading/trailing whitespace
+        emotion = emotion.lower()
         
         if emotion:
             words = emotion.split() #Splits the string into individual words (if a sentence is passed)
