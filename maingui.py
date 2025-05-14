@@ -1,3 +1,11 @@
+# Title: Mood Board Generator
+# Abstract: The Mood Board Generator is a Pyside 6 based app that helps users reflect on how they're feeling by asking a few thoughtful questions. 
+# Based on their responses, it creates a personalized mood board filled with images that match their current mood.
+# It showcases GUI design, user interaction, and image based storytelling.
+# Authors: 
+#   - Brianna Magallon - Designed and built the main user interface, including the layout, input questions, and logic for launching the mood board window.
+# Date: May 14, 2025
+
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLineEdit, 
                                 QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, QComboBox)
@@ -10,8 +18,6 @@ from get_images import search_images
 
 app = QApplication([])
 
-
-mood_list = ['Choose a mood','sad', 'neutral','happy', 'angry', 'anxious']
 day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
 fun_list = ['Choose an answer', 'Today', 'Yesterday', 'This week', 'A while ago', 'I can\'t remember']
 
@@ -33,11 +39,10 @@ class MyWindow(QWidget):
     self.image_label.pixmap = scaled_pixmap   
 
     #question 1
-    self.label = QLabel("Enter what emotion you're feeling right now (one word)")
+    self.label = QLabel("How are you feeling today?")
     self.main_emotion = QLineEdit()
-    #self.combo_box = QComboBox()
-    #self.combo_box.add_items(mood_list)
-    #self.combo_box.set_style_sheet("border: 2px solid black;")
+    self.main_emotion.placeholder_text = "Type a mood"
+    self.main_emotion.set_style_sheet("border: 2px solid black;")
 
     #question 2
     self.label2 = QLabel("How is your day going?")
@@ -118,7 +123,6 @@ class MyWindow(QWidget):
   @Slot()
   def open_win(self):
       emotion = self.main_emotion.text
-      #selected_mood = mood_list[selected_index]
       self.new_win = MainWindow(emotion)
       self.new_win.show_maximized()
       self.hide()

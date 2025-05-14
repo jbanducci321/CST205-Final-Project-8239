@@ -1,3 +1,15 @@
+# Course: CST 205-01
+# Title: Mood Board Generator
+# Abstract: The Mood Board Generator is a Pyside 6 based app that helps users reflect on how they're feeling by asking a few thoughtful questions. 
+# Based on their responses, it creates a personalized mood board filled with images that match their current mood.
+# It showcases GUI design, user interaction, and image based storytelling.
+# Authors: 
+#   - Brianna Magallon - Designed and built the main user interface, including the layout, input questions, and logic for launching the mood board window. (MyWindow and Maingui.py)
+#   - Joshua Sumagang - Video get, download, and display functionality
+#   - Mohammad Shahroudi - Main_gui.py
+#   - Jacob Banducci- Worked on the image API functions, the collage creator, background code with the emolex and MainWindow GUI
+# Date: May 14, 2025
+
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
                                QComboBox, QDialog, QLineEdit, QLayout, QScrollArea)
@@ -14,19 +26,11 @@ from get_vid import search_youtube_videos
 from dl_yt import download_video, download_audio
 
 #Fallback incase it doesn't display the video on some systems.
-
-# Course: CST 205
-# Title: Emotional Media Display
-# Abstract: This file generates a mood board with a few survery questions.
-# Authors: Mohammad Shahroudi and Brianna Magallon
-# Date: May 14, 2025
-
 if "QTWEBENGINE_CHROMIUM_FLAGS" not in os.environ:
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-gpu"
 
 app = QApplication([])
 
-# mood_list = ['Choose a mood','sad', 'neutral','happy', 'angry', 'anxious']
 # The list of how is your day going.
 day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
 # The list of when is the last time that you did something fun.
@@ -36,6 +40,7 @@ class MyWindow(QWidget):
   def __init__(self):
     super().__init__()
 
+    #basic style
     self.style_sheet = "background-color: white; color: black;font-size: 16px;font-family: Arial;"
 
     #Title
@@ -50,11 +55,10 @@ class MyWindow(QWidget):
     self.image_label.pixmap = scaled_pixmap   
 
     #question 1
-    self.label = QLabel("Enter what emotion you're feeling right now (one word)")
+    self.label = QLabel("How are you feeling today?")
     self.main_emotion = QLineEdit()
-    #self.combo_box = QComboBox()
-    #self.combo_box.add_items(mood_list)
-    #self.combo_box.set_style_sheet("border: 2px solid black;")
+    self.main_emotion.placeholder_text = "Type a mood"
+    self.main_emotion.set_style_sheet("border: 2px solid black;")
 
     #question 2
     self.label2 = QLabel("How is your day going?")
@@ -68,7 +72,6 @@ class MyWindow(QWidget):
     self.fun_time_box.add_items(fun_list)
     self.fun_time_box.set_style_sheet("border: 2px solid black;")
 
-
     #question 4
     self.label4 = QLabel("Do you feel more introverted or extroverted right now?")
     self.introvert_button = QPushButton("Introverted")
@@ -80,13 +83,11 @@ class MyWindow(QWidget):
     self.extrovert_button.clicked.connect(self.select_extrovert)
     self.extrovert_button.set_style_sheet("background-color: lightblue;")
 
-
     #question 5
     self.label5 = QLabel("How would you rate your current energy (1–10)?")
     self.energy_input = QLineEdit()
     self.energy_input.placeholder_text = "Type a number from 1 to 10"
     self.energy_input.set_style_sheet("border: 2px solid black;")
-
 
     self.proceed_button = QPushButton("Show Mood Board")
     self.proceed_button.set_style_sheet("background-color: lightblue;")
@@ -139,7 +140,6 @@ class MyWindow(QWidget):
       self.new_win = MainWindow(emotion)
       self.new_win.show_maximized()
       self.hide()
-
 
 
 
