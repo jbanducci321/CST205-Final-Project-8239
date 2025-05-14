@@ -5,6 +5,7 @@ Uses the youtube google API to obtain a list of video urls from a search string.
 5/13/25
 Joshua Sumagang
 '''
+#API KEY AIzaSyBgxL4_sHM9p4Wl6WL21xB1I1LTNykrOF8
 from googleapiclient.discovery import build
 import random
 
@@ -19,7 +20,7 @@ def search_youtube_videos(query):
         videoLicense='creativeCommon',
         maxResults=10
     ).execute()
-    
+
     video_info = []
     random_index = random.randint(0, len(response["items"]) - 1)
     video_id = response["items"][random_index]["id"]["videoId"]

@@ -1,6 +1,4 @@
-'''Collage Background Selector
-CST-205
-Takes a string input and uses the emolex to pick an appropriate background color for the collage
+'''Takes a string input and uses the emolex to pick an appropriate background color for the collage
 Worked on by: Jacob Banducci
 5/11/2025'''
 

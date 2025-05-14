@@ -1,10 +1,6 @@
-'''Media Display GUI
-CST-205
-Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
+'''Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
 bar for enhanced readability
-MainWindow on by: Jacob Banducci and Joshua Sumagong
-Image related methods and widget worked on by: Jacob Banducci
-Video related methods and widgets worked on by Joshua Sumagong
+Worked on by: Jacob Banducci and Joshua Sumagong
 5/12/2025'''
 
 import sys
@@ -19,7 +15,7 @@ from io import BytesIO
 import os
 import string
 
-#Window for displaying the media retrieved from the emotion entered
+
 class MainWindow(QWidget):
     def __init__(self, emotion):
         super().__init__()
@@ -46,9 +42,11 @@ class MainWindow(QWidget):
             emotion = 'neutral'
         
         #Calls the image search function
-        pil_img, emotion_returned = search_images(emotion)
-        title_label = QLabel(f'Showing Media related to: {emotion_returned.capitalize()}')
-        title_label.style_sheet = 'font-size: 24px; font-weight: bold; margin-bottom: 20px;'
+        pil_img = search_images(emotion)
+        
+        #Creates a label to display specified emotion to the user
+        emotion_label = QLabel(f'Displaying media related to: {emotion.capitalize()}')
+        emotion_label.style_sheet = 'font-size: 24px; font-weight: bold; margin-bottom: 20px;'
 
         self.pil_img = pil_img
         
@@ -85,7 +83,7 @@ class MainWindow(QWidget):
         save_btn.set_fixed_width(200)
 
         #Adds the widgets to the vbox for the image
-        img_vbox.add_widget(title_label, alignment=Qt.AlignCenter)
+        img_vbox.add_widget(emotion_label, alignment=Qt.AlignCenter)
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
