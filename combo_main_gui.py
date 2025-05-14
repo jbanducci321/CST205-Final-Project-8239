@@ -15,8 +15,9 @@ from dl_yt import download_video, download_audio
 
 #Fallback incase it doesn't display the video on some systems.
 
-# CST 205
-# Mood Board Project
+# Course: CST 205
+# Title: Mood Board Project
+# Abstract: 
 # Authors: Mohammad Shahroudi and Brianna Magallon
 # Date: May 14, 2025
 
