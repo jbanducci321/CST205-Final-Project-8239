@@ -46,7 +46,9 @@ class MainWindow(QWidget):
             emotion = 'neutral'
         
         #Calls the image search function
-        pil_img = search_images(emotion)
+        pil_img, emotion_returned = search_images(emotion)
+        title_label = QLabel(f'Showing Media related to: {emotion_returned.capitalize()}')
+        title_label.style_sheet = 'font-size: 24px; font-weight: bold; margin-bottom: 20px;'
 
         self.pil_img = pil_img
         
@@ -83,6 +85,7 @@ class MainWindow(QWidget):
         save_btn.set_fixed_width(200)
 
         #Adds the widgets to the vbox for the image
+        img_vbox.add_widget(title_label, alignment=Qt.AlignCenter)
         img_vbox.add_widget(img_label)
         img_vbox.add_widget(save_lable, alignment=Qt.AlignCenter)
         img_vbox.add_widget(save_btn, alignment=Qt.AlignCenter)
