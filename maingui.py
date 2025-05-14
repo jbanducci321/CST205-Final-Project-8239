@@ -132,7 +132,7 @@ class MyWindow(QWidget):
       self.new_win.show_maximized()
       self.hide()
 
-#Run main window
+#run main window
 main = MyWindow()
 main.show()
 sys.exit(app.exec())
