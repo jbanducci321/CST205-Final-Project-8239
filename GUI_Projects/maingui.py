@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLine
                                 QHBoxLayout, QVBoxLayout, QDialog, QTextBrowser, QComboBox)
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Slot, Qt
-from Display_Board import MainWindow
+from GUI_Projects.Display_Board import MainWindow
 from __feature__ import snake_case, true_property
 from io import BytesIO
 from get_images import search_images

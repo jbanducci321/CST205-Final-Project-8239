@@ -36,6 +36,7 @@ day_list = ['Choose an answer' , 'good', 'boring', 'stressful']
 # The list of when is the last time that you did something fun.
 fun_list = ['Choose an answer', 'Today', 'Yesterday', 'This week', 'A while ago', 'I can\'t remember']
 
+#Worked on by Mohammad Shahroudi and Brianna Magallon
 class MyWindow(QWidget):
   def __init__(self):
     super().__init__()
@@ -142,7 +143,7 @@ class MyWindow(QWidget):
       self.hide()
 
 
-
+#Worked on by Jacob Banducci and Joshua Sumagong
 class MainWindow(QWidget):
     def __init__(self, emotion):
         super().__init__()

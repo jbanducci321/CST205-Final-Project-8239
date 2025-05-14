@@ -1,4 +1,6 @@
-'''Takes a string input and uses the emolex to pick an appropriate background color for the collage
+'''Title: Emotion Color Picker
+CST-205
+Takes a string input and uses the emolex to pick an appropriate background color for the collage
 Worked on by: Jacob Banducci
 5/11/2025'''
 

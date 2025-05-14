@@ -1,7 +1,10 @@
-'''Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
+'''Title: Media Display
+Uses a string to generate and display an image and video based off of the emotion passed. Uses a scroll
 bar for enhanced readability
 Worked on by: Jacob Banducci and Joshua Sumagong
-5/12/2025'''
+5/12/2025
+This provided the base for the final gui code, we had to switch to combining the two GUI's into one to account
+for an error that sometimes occured when running as seperate files'''
 
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, 
