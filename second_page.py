@@ -5,6 +5,9 @@ from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLine
 from PySide6.QtCore import Slot, Qt
 from __feature__ import snake_case, true_property
 
+# This is a test file.
+# My goal was to go to this page
+# after running main.py and pressing go to the Page 2 button.
 
 class Page2(QWidget):
     def __init__(self):
