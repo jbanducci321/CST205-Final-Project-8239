@@ -8,6 +8,10 @@ from __feature__ import snake_case, true_property
 from first_page import Page1
 from second_page import Page2
 
+# In this file, my goal was to
+# be able to change pages with the click of a button
+# to either page 1 or page 2
+
 # class AnotherWindow(QWidget):
 #     def __init__(self):
 #         super().__init__()
